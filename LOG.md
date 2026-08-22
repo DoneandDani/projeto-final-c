@@ -50,3 +50,25 @@ Criar a estrutura básica do jogo.
 
 - 130 linhas +-;
 ..
+
+## Sessão 3 – 22/08/2026
+**Funcionalidades implementadas hoje:**
+
+- Implementei um conjunto de funções que em conjunto permitem criam uma sala de tamanho arbitrário.
+- Verifiquei que de facto é possível criar um gerador de salas aleatório.
+
+**Maior dificuldade encontrada e como resolvi (ou não resolvi):**
+
+Perceber como criar as salas (Rooms) de forma que possam ser geradas só com base em coordenadas de ínico, largura e altura foi complicado. Em particular perceber que tipo de estrutura seria apropriada e como usar essa estrutura para construir as funções para a gerar demorou bastante.
+Inicialmente pensei em criar diretamente várias structs do tipo Room, mas devido ao facto de isto seria limitante no desenvolvimento futuro decidi criar um array de pointers, que contem pointers para Rooms criadas pelas funções, baseando-me em como projetos online similares fizeram.
+De decidir que este é o melhor percurso a implementar é que foi o problema. Ainda demoro bastante a  entender exatamente o que está a acontecer na máquina relativamente a pointers, por isso progresso é lento.
+
+**Próximo passo planeado:**
+...
+- Melhorar a geração do mapa (gerar corredores para ligar as salas);
+- Implementar inimigos rudimentares;
+- Simplificar e limpar o código para posteriormente o dividir em diferentes ficheiros ( o que implica perceber como fazer isso no geral);
+
+**Linhas de código escritas hoje (estimativa):**
+
+- 60 linhas de código no final, provavelmente centenas se contar as diferentes tentativas de implementação.

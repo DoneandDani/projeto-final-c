@@ -9,17 +9,30 @@ typedef struct Player
     int xcord;
     int ycord;
     int HP;
+    //Room * room;
 } Player ;
+
+typedef struct Room
+{
+  int xcord; //Top corner position of the room
+  int ycord;
+  int width;
+  int height;
+  //Monster ** monsters;
+  //Items ** items;  
+} Room ;
+
 
 
 
 int screen_setup();
-int map_maker();
+Room ** map_maker();
 Player * player_maker(); //Promising a function that return a pointere to the struct Player, I think.
 int handle_input(int input, Player * user);
 int player_move(int y, int  x, Player* user );
 int check_move( int tempY, int tempX, Player* user);
-
+Room * create_room(int y, int x, int height, int width);
+int draw_room(Room *room);
 
 int main(){
     
@@ -53,18 +66,63 @@ int screen_setup(){
     return 1;
 }
 
-int map_maker(){
+Room ** map_maker(){
 
-    mvprintw(13,13,"---------");
-    mvprintw(14,13,"|.......|");
-    mvprintw(15,13,"|.......|");
-    mvprintw(16,13,"|.......|");
-    mvprintw(17,13,"---------");
+    Room ** rooms;
+    rooms = malloc(sizeof(Room)*6);
+    
+    
+    rooms[0] = create_room( 13,13,6,8);
+    draw_room(rooms[0]);
+    rooms[1] = create_room(40, 40, 14, 4);
+    draw_room(rooms[1]);
+    rooms[2]= create_room(20, 10, 8, 12);
+    draw_room(rooms[2]);
 
-    return 0;
+    return rooms;
 
 
 }
+
+Room * create_room(int y, int x, int height, int width){
+    
+    Room * newRoom;
+    newRoom = malloc(sizeof(Room));
+
+    newRoom ->ycord =y;
+    newRoom ->xcord=x;
+    newRoom ->height =height;
+    newRoom ->width = width;
+
+    return newRoom;
+
+}
+
+
+int draw_room(Room *room){
+
+    
+    
+    for ( int y = room ->ycord +1; y < room-> ycord + room->height -1; y++ ){
+        mvprintw(y, room ->xcord, "|" );
+        mvprintw(y,room ->xcord + room -> width -1, "|");
+        for ( int x = room ->xcord +1; x < room-> xcord + room->width -1; x++ ){
+            mvprintw(y, x, ".");
+        }
+
+
+    }
+
+    for ( int x = room ->xcord; x < room-> xcord + room->width; x++ ){
+        mvprintw(room->ycord, x, "-");
+        mvprintw(room->ycord+ room-> height-1, x, "-");
+
+    }
+
+    return 1;
+
+}
+
 
 Player * player_maker(){
 
