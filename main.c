@@ -4,23 +4,32 @@
 
 #define esc 27 //Macro for the esc key in ASCII
 
+typedef struct Coordinates //Decided to create this struct to simplify future code. Got the idea from other similar projects online.
+{
+    int y;
+    int x;
+    //Maybe add stuff about the tile type, like traps and such
+    
+} Coordinates;
+
 typedef struct Player
 {
-    int xcord;
-    int ycord;
+    Coordinates coordinates;
     int HP;
     //Room * room;
 } Player ;
 
 typedef struct Room
 {
-  int xcord; //Top corner position of the room
-  int ycord;
+  //int ycord;
+  //int xcord;
+  Coordinates coordinates;
   int width;
   int height;
   //Monster ** monsters;
   //Items ** items;  
 } Room ;
+
 
 
 
@@ -84,13 +93,15 @@ Room ** map_maker(){
 
 }
 
+
+
 Room * create_room(int y, int x, int height, int width){
     
     Room * newRoom;
     newRoom = malloc(sizeof(Room));
 
-    newRoom ->ycord =y;
-    newRoom ->xcord=x;
+    newRoom ->coordinates.y =y;
+    newRoom ->coordinates.x=x;
     newRoom ->height =height;
     newRoom ->width = width;
 
@@ -103,19 +114,19 @@ int draw_room(Room *room){
 
     
     
-    for ( int y = room ->ycord +1; y < room-> ycord + room->height -1; y++ ){
-        mvprintw(y, room ->xcord, "|" );
-        mvprintw(y,room ->xcord + room -> width -1, "|");
-        for ( int x = room ->xcord +1; x < room-> xcord + room->width -1; x++ ){
+    for ( int y = room ->coordinates.y +1; y < room-> coordinates.y + room->height -1; y++ ){
+        mvprintw(y, room ->coordinates.x, "|" );
+        mvprintw(y,room ->coordinates.x + room -> width -1, "|");
+        for ( int x = room ->coordinates.x +1; x < room-> coordinates.x + room->width -1; x++ ){
             mvprintw(y, x, ".");
         }
 
 
     }
 
-    for ( int x = room ->xcord; x < room-> xcord + room->width; x++ ){
-        mvprintw(room->ycord, x, "-");
-        mvprintw(room->ycord+ room-> height-1, x, "-");
+    for ( int x = room ->coordinates.x; x < room-> coordinates.x + room->width; x++ ){
+        mvprintw(room->coordinates.y, x, "-");
+        mvprintw(room->coordinates.y+ room-> height-1, x, "-");
 
     }
 
@@ -129,8 +140,8 @@ Player * player_maker(){
     Player *initPlayer;
     initPlayer= malloc(sizeof(Player)); //Dynamically allocated the size in memory necessary for the newPlayer pointer based on the size of Player,
                                        // as I don't know beforehand how big it's going to be (+ I'll constantly add changes to the Player struct itself).
-    initPlayer-> xcord =14; //Acessing the coordinates in the Player struct and changing their values
-    initPlayer-> ycord =14;
+    initPlayer-> coordinates.x =14; //Acessing the coordinates in the Player struct and changing their values
+    initPlayer-> coordinates.y =14;
     initPlayer->HP= 5;
 
     player_move(14,14, initPlayer );
@@ -146,26 +157,26 @@ int handle_input(int input, Player * user){
     switch (input)
     {
         case KEY_UP:
-            tempY = user->ycord -1;
-            tempX = user->xcord;
+            tempY = user->coordinates.y -1;
+            tempX = user->coordinates.x;
             
             break;
 
         case KEY_DOWN:
-            tempY = user->ycord +1;
-            tempX = user->xcord;
+            tempY = user->coordinates.y +1;
+            tempX = user->coordinates.x;
             
             break;
         
         case KEY_LEFT:
-            tempY = user->ycord ;
-            tempX = user->xcord -1;
+            tempY = user->coordinates.y ;
+            tempX = user->coordinates.x -1;
             
             break;
         
         case KEY_RIGHT:
-            tempY = user->ycord;
-            tempX = user->xcord +1;
+            tempY = user->coordinates.y;
+            tempX = user->coordinates.x +1;
             
             break;
 
@@ -179,13 +190,13 @@ int handle_input(int input, Player * user){
 
 int player_move(int y, int  x, Player* user ){
 
-    mvprintw(user->ycord, user->xcord, ".");
+    mvprintw(user->coordinates.y, user->coordinates.x, ".");
 
-    user->ycord =y;
-    user->xcord =x;
+    user->coordinates.y =y;
+    user->coordinates.x =x;
 
-    mvprintw(user->ycord, user->xcord, "@"); //Printing the Player 'avatar' on the screen
-    move(user->ycord, user->xcord);          //moves the cursor back to the place of the avatar, since by default mvprintw moves it a space foward.
+    mvprintw(user->coordinates.y, user->coordinates.x, "@"); //Printing the Player 'avatar' on the screen
+    move(user->coordinates.y, user->coordinates.x);          //moves the cursor back to the place of the avatar, since by default mvprintw moves it a space foward.
 
 }
 
@@ -199,7 +210,7 @@ int check_move( int tempY, int tempX, Player* user){
             player_move(tempY,tempX, user);
             break;
         default:
-            move(user->ycord,user->xcord);
+            move(user->coordinates.y,user->coordinates.x);
             break;
 
     }

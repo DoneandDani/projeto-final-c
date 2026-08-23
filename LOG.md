@@ -72,3 +72,19 @@ De decidir que este é o melhor percurso a implementar é que foi o problema. Ai
 **Linhas de código escritas hoje (estimativa):**
 
 - 60 linhas de código no final, provavelmente centenas se contar as diferentes tentativas de implementação.
+
+
+## Sessão 4 – 23/08/2026
+**Funcionalidades implementadas hoje:**
+
+- Simplifiquei o código criando uma struct para as coordenadas, dado que se preciso de aceder à posição de algo preciso da coordenada x e y. A ideia surgiu após ler sugestões feitas online a pessoas com projetos semelhantes.
+
+**Maior dificuldade encontrada e como resolvi (ou não resolvi):**
+...
+Nada de mais, fora a dificuldade usual de entender o que está a acontecer no código com os pointers. Entender o que uma operação do estilo coordinates.x foi interessante.
+
+**Próximo passo planeado:**
+Os mesmos da sessão passada. A sessão de hoje foi curta e só envolveu reescrever algum código.
+
+**Linhas de código escritas hoje (estimativa):**
+10 +-, a maiorio foi reescrever código que já existia.
