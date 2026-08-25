@@ -88,3 +88,26 @@ Os mesmos da sessão passada. A sessão de hoje foi curta e só envolveu reescre
 
 **Linhas de código escritas hoje (estimativa):**
 10 +-, a maiorio foi reescrever código que já existia.
+
+## Sessão 5 – 25(26)/08/2026
+**Funcionalidades implementadas hoje:**
+
+- Implementação de corredores entre salas com um algoritmo de distância greedy;
+- Implementação de uma nova struct Level para permitir, no futuro, ter diferentes níveis no jogo;
+- Implementação básica de monstros. As funções implementadas simplesmente geram os monstros em posições aleatórias de casa sala (tem uma chance de gerar por sala também ) com as suas características implementadas;
+- Fiz uma reorganização geral do projeto. Dividi o main.c em diversos ficheiros para cada parte relevante ao trabalho (player, mapa, salas,monstros, níveis). Implementei o  makefile do projeto. 
+
+**Maior dificuldade encontrada e como resolvi (ou não resolvi):**
+- Tive grande dificuldade em dividir o projeto por diversos ficheiros. Tive que reinstalar o compilador do C e seguir vários tutoriais até estar tudo funcional.
+
+**Próximo passo planeado:**
+
+- Melhorar (muito provavelmente mudar completamente) o algoritmo dos corredores. De momento não produz o resultado desejado dependendo de onde as portas são geradas.
+- Completar os monstros (faze-los mover pelo mapa);
+- Criar um sistema de combate;
+- Gerador de mapa aleatório (a partir de uma seed gerar um mapa com as respetivas rooms e monstros distribuidos);
+- Criar tesouros/items para colocar no mapa;
+
+**Linhas de código escritas hoje (estimativa):**
+
++- 300 linhas, mais algumas dezenas reescritas ;
