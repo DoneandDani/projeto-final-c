@@ -94,10 +94,10 @@ Monster * select_monster(int level){
         return create_monster('r',(rand()%2)+2 ,(rand()%3)+1,1,7,1  );
         break;
     case 2:
-        return create_monster('o',(rand()%3)+2 ,(rand()% 4)+1,1,10,2);
+        return create_monster('g',(rand()%3)+2 ,(rand()% 4)+1,1,10,2);
         break;
     case 3:
-        return create_monster('d',6 ,(rand() % 4) + 1+ (rand() % 4) + 1,2,6,1);
+        return create_monster('w',6 ,(rand() % 4) + 1+ (rand() % 4) + 1,2,6,1);
         break;
     case 4:
         return create_monster('t', 28,(rand() % 6) + 1 +(rand() % 6) + 1,1,4,1);
@@ -119,20 +119,139 @@ Monster * create_monster(char symbol, int health, int attack, int speed, int AC,
     newMonster->attack=attack;
     newMonster->speed=speed;
     newMonster->AC=AC;
+    newMonster->isAlive=1;
     newMonster->pathfinding=pathfinding;
+
+    sprintf(newMonster->stringBuffer,"%c", symbol);
 
     return newMonster;
 }
 
 int set_starting_cords( Monster * monster, Room * room){
 
-    char buffer[8];
+    
 
-    monster->mCords.y = (rand() % (room->height-2)) + room->coordinates.y+1;
-    monster->mCords.x = (rand() % (room->width-2)) + room->coordinates.x+1;
+    monster->mCords=malloc(sizeof(Coordinates));
 
-    sprintf(buffer,"%c", monster->symbol);
+    monster->mCords->y = (rand() % (room->height-2)) + room->coordinates.y+1;
+    monster->mCords->x = (rand() % (room->width-2)) + room->coordinates.x+1;
 
-    mvprintw(monster->mCords.y,monster->mCords.x, buffer);
+    
 
+    mvprintw(monster->mCords->y,monster->mCords->x, monster->stringBuffer);
+
+}
+
+int  move_monster(Level *level){
+
+    int n;
+    for (n=0; n <level->numberOfMonsters; n++){
+
+        if (level->monsters[n] ->isAlive==0)
+        {
+            continue;
+        }
+        
+        mvprintw(level->monsters[n]->mCords->y,level->monsters[n]->mCords->x, ".");
+
+        if (level->monsters[n]->pathfinding == 1){
+            pathfinding_random(level->monsters[n]->mCords);
+        }
+        else{
+            
+            pathfinding_seek(level->monsters[n]->mCords, level->user->coordinates);
+            
+        }
+
+        mvprintw(level->monsters[n]->mCords->y,level->monsters[n]->mCords->x, level->monsters[n]->stringBuffer);
+    }
+}
+
+
+Monster * get_monster(Coordinates *coordinates, Monster **monsters){
+
+    int n;
+    for (n=0; n< 6;n++){
+        if ((coordinates->y== monsters[n]->mCords->y) && (coordinates->x== monsters[n]->mCords->x)) {
+            return monsters[n];
+           
+        }
+    }
+    return NULL;
+}
+
+int kill_monster(Monster * monster){
+
+    mvprintw(monster ->mCords->y,monster ->mCords->x, "." ); //Change later to leave corpse behind
+    monster->isAlive=0;
+
+    return 1;
+
+}
+
+
+
+int pathfinding_random(Coordinates *coordinates){
+
+    int randomValue;
+    randomValue = rand() % 5;
+    switch (randomValue) // Case 0 ->UP Case 1 ->Down Case 2 ->LEFT Case 3 ->RIGHT Case 4-> Nothing
+    {
+    case 0:
+        if (mvinch(coordinates->y -1, coordinates->x) == '.'){
+            coordinates->y =coordinates->y -1;
+        }
+        break;
+    case 1:
+        if (mvinch(coordinates->y +1, coordinates->x) == '.'){
+            coordinates->y =coordinates->y +1;
+        }
+        break;
+    case 2:
+        if (mvinch(coordinates->y, coordinates->x -1) == '.'){
+            coordinates->x =coordinates->x -1;
+        }
+        break;
+    case 3:
+        if (mvinch(coordinates->y, coordinates->x +1) == '.'){
+            coordinates->x =coordinates->x +1;
+        }
+        break;
+    case 4:
+        
+        break;
+    
+    
+    default:
+        break;
+    }
+
+}
+
+
+int pathfinding_seek(Coordinates *start, Coordinates *destination){
+
+    
+    if ((abs((start->x-1) - destination->x) < abs(start->x - destination->x)) && (mvinch(start->y, start->x-1)== '.')){
+        
+        start->x =start->x-1;
+
+
+    } else if ((abs((start->x+1) - destination->x) < abs(start->x - destination->x)) && (mvinch(start->y, start->x+1)== '.')){
+        
+        start->x =start->x +1;
+
+
+    } else if ((abs((start->y+1) - destination->y) < abs(start->y - destination->y)) && (mvinch(start->y+1, start->x)== '.')){
+        
+        start->y =start->y +1;
+    
+    } else if ((abs((start->y-1) - destination->y) < abs(start->y - destination->y)) && (mvinch(start->y-1, start->x)== '.')){
+        
+        start->y =start->y -1;
+    
+    } else{
+
+    }
+    return 1;
 }

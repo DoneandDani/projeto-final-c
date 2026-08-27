@@ -18,6 +18,8 @@ typedef struct Level{
     struct Room ** rooms;
     struct Monster ** monsters;
     int numberOfMonsters;
+    struct Player * user;
+    
 
 }Level;
 
@@ -31,20 +33,27 @@ typedef struct Coordinates //Decided to create this struct to simplify future co
 
 typedef struct Player
 {
-    Coordinates coordinates;
+    Coordinates * coordinates;
     int HP;
-    //Room * room;
+    int attack;
+    int gold;
+
+    int maxHP;
+    int XP;
+
 } Player ;
 
 typedef struct Monster
 {
+    char stringBuffer[2];
     char symbol;
     int health;
     int attack;
     int speed;
     int AC;
     int pathfinding;
-    Coordinates mCords;
+    int isAlive;
+    Coordinates * mCords;
 
 
 }Monster;
@@ -68,6 +77,8 @@ typedef struct Room
 
 
 int screen_setup();
+int print_game_interface(Level * level);
+
 Room ** room_maker();
 char ** save_level_coordinates();
 Level * create_level(int level);
@@ -75,7 +86,7 @@ Level * create_level(int level);
 Player * player_maker(); //Promising a function that return a pointere to the struct Player, I think.
 Coordinates * handle_input(int input, Player * user);
 int player_move(Coordinates *newCords, Player* user, char **level );
-int check_move( Coordinates *newCords, Player* user, char **level);
+int check_move(Coordinates *newCords, Level *level);
 Room * create_room(int y, int x, int height, int width);
 int draw_room(Room *room);
 int connect_doors(Coordinates *door1 , Coordinates *door2);
@@ -84,6 +95,12 @@ int add_monsters(Level * level);
 Monster * select_monster(int level);
 Monster * create_monster(char symbol, int health, int attack, int speed, int AC, int pathfinding);
 int set_starting_cords( Monster * monster, Room * room);
+int  move_monster(Level *level);
+int pathfinding_random(Coordinates *coordinates);
+int pathfinding_seek(Coordinates *start, Coordinates *destination);
+Monster * get_monster(Coordinates *coordinates, Monster **monsters);
+int kill_monster(Monster * monster);
 
+int combat(Player *player, Monster *monster, int initiative);
 
 #endif 

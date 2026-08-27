@@ -12,6 +12,8 @@ Level * create_level(int level){
     newLevel->tiles = save_level_coordinates();
     add_monsters(newLevel);
 
+    newLevel->user=player_maker();
+
     return newLevel;
 
 }

@@ -111,3 +111,28 @@ Os mesmos da sessão passada. A sessão de hoje foi curta e só envolveu reescre
 **Linhas de código escritas hoje (estimativa):**
 
 +- 300 linhas, mais algumas dezenas reescritas ;
+
+## Sessão 6 – D27/08/2026
+**Funcionalidades implementadas hoje:**
+
+- Implementei funcionalidade de movimento aos monstros com dois padrões de movimento:
+    - Movimento aleatório;
+    - Movimento 'seeking', em que o monstro se move em direção à posição do jogador (mesmo algoritmo que para a geração de corredores);
+- Implementação básica do sistema de combate;
+- Implementação de uma interface básica do jogo;
+- Leve reorganização geral do código e melhoria/simplifação de algumas funções; 
+**Maior dificuldade encontrada e como resolvi (ou não resolvi):**
+
+Implementar um algoritmo diferente para os corredores provou ser bastante difícil. Não consegui fazer algo que não causa-se SegFaults. Decidi avançar para os passos seguintes. 
+
+
+**Próximo passo planeado:**
+
+- Gerador de mapa aleatório (a partir de uma seed gerar um mapa com as respetivas rooms e monstros distribuidos);
+- Criar tesouros/items para colocar no mapa;
+- Melhor o sistema de combate;
+- Introduzir mais mecânicas de RPG (Equipamento, diferentes armas, level-ups...) 
+
+**Linhas de código escritas hoje (estimativa):**
+ 
+ +- 200 linhas de código;

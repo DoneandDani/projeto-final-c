@@ -2,7 +2,7 @@
 
 int main(){
     
-    Player * user; //user is declared as a pointer to the struct Player
+    
     int userInput;
     Coordinates *newCords;
     
@@ -10,13 +10,17 @@ int main(){
 
     screen_setup();
     level = create_level(1);
+    print_game_interface(level);
+    
 
     
-    user = player_maker();
     //Main game loop, ends when user pressess the esc key
     while ((userInput =getch()) != esc){
-        newCords= handle_input(userInput, user);
-        check_move(newCords, user, level->tiles);
+        print_game_interface(level);
+        newCords= handle_input(userInput, level-> user);
+        check_move(newCords, level);
+        move_monster(level);
+        move(level->user->coordinates->y,level->user->coordinates->x);
     }
     
     refresh();
@@ -27,16 +31,4 @@ int main(){
     
 }
 
-
-int screen_setup(){
-    initscr();
-    printw("Hello world!");
-    raw();
-    keypad(stdscr, TRUE);
-    noecho();
-
-    srand(time(NULL));
-
-    return 1;
-}
 
