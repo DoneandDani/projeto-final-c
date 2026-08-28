@@ -5,7 +5,7 @@ CFLAGS = -I$(IDIR) -I/ucrt64/include/ncursesw
 LDLIBS = -lncursesw
 
 IDIR = ./include/
-SRCDIR = ./scr/
+SRCDIR = ./src/
 
 SOURCES = $(wildcard $(SRCDIR)/*.c)
 
@@ -15,10 +15,10 @@ all: rogue
 
 rogue:
 	rm -f rogue.exe
-	$(CC) $(SOURCES) $(CFLAGS) $(LDLIBS) -o $@
+	$(CC) $(SOURCES) $(CFLAGS) $(LDLIBS) -o rogue.exe
 
 run:
-	./rogue
+	./rogue.exe
 
 clean:
-	rm rogue
+	rm -f rogue rogue.exe main.exe

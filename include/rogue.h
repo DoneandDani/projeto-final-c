@@ -87,7 +87,8 @@ Player * player_maker(); //Promising a function that return a pointere to the st
 Coordinates * handle_input(int input, Player * user);
 int player_move(Coordinates *newCords, Player* user, char **level );
 int check_move(Coordinates *newCords, Level *level);
-Room * create_room(int y, int x, int height, int width);
+
+Room * create_room(int grid);
 int draw_room(Room *room);
 int connect_doors(Coordinates *door1 , Coordinates *door2);
 
