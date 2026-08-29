@@ -106,4 +106,29 @@ char ** save_level_coordinates(){
 
 }
 
+void draw_level(Level *level){
 
+    int x,y,n;
+    
+    //Prints each tile of the map
+    for (y=0;y<max_height;y++){
+
+        
+        for (x=0;  x< max_width; x++){
+
+            mvaddch(y,x,level->tiles[y][x]);
+        }
+    }
+
+    //then prints the monstersº
+
+    for (n =0; n<level->numberOfMonsters; n++){
+
+        draw_monster(level->monsters[n]);
+    }
+
+    //then prints player
+
+    draw_player(level->user);
+
+}

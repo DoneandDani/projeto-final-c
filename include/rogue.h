@@ -4,11 +4,21 @@
 #include <stdio.h>
 #include<ncurses.h>
 #include<stdlib.h>
+#include<menu.h>
+
 
 #include<time.h>
 
 
 #define esc 27 //Macro for the esc key in ASCII
+
+typedef struct Game
+{
+    struct Level  *levels[10];
+    int currentLevel;
+}Game;
+
+
 
 typedef struct Level{
 
@@ -84,6 +94,9 @@ typedef struct Door
 extern int max_width;
 extern int max_height;
 
+// Main
+int main_game_loop( Game *game);
+void render_game(Game *game);
 
 // Screen functions
 int screen_setup();
@@ -94,6 +107,7 @@ Room ** room_maker();
 char ** save_level_coordinates();
 Level * create_level(int level);
 void connect_doors(Level * level);
+void draw_level(Level *level);
 
 // Player functions
 Player * player_maker(); //Promising a function that return a pointere to the struct Player, I think.
@@ -101,6 +115,7 @@ Coordinates * handle_input(int input, Player * user);
 int player_move(Coordinates *newCords, Player* user, char **level );
 int check_move(Coordinates *newCords, Level *level);
 int place_player(Player *user, Room **rooms);
+void draw_player(Player *player );
 
 // Room functions
 Room * create_room(int grid, int nOfDoors);
@@ -116,6 +131,7 @@ int pathfinding_random(Coordinates *coordinates);
 int pathfinding_seek(Coordinates *start, Coordinates *destination);
 Monster * get_monster(Coordinates *coordinates, Monster **monsters);
 int kill_monster(Monster * monster);
+void draw_monster(Monster *monster);
 
 // Combat functions 
 int combat(Player *player, Monster *monster, int initiative);
@@ -126,5 +142,10 @@ int add_neighbors(int **frontier,int frontier_count, int *** came_from, int y, i
 void pathfinding(Coordinates *start, Coordinates *end );
 void add_coordinates_YX(int ** frontier, int  frontier_count, int y, int x);
 int pf_verify_cord(int y, int x);
+
+//Menus
+int main_menu(int nItems, char * choices[]);
+void close_menu(int nItems, MENU *menu, ITEM ** items);
+void menu_loop();
 
 #endif 

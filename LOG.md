@@ -180,3 +180,31 @@ As  que tinha referido na sessão 6, ao que acrescento a criação de um menu e 
 **Linhas de código escritas hoje (estimativa):**
 
 +- 150 linhas de código.
+
+## Sessão 9 – 29/08/2026
+**Funcionalidades implementadas hoje:**
+
+- Reescrita do código para desacupular as funções que geram objetos das funções que lhes dão print;
+- Reescrita do main.c e da estrutura que inicializa o jogo;;
+- Implementação de um menu inicial, bem como, as funções responsáveis por geral outros menus;
+- Implementação de uma 'death' flag, ou seja, quando o jogador estiver a zero HP, o jogo termina.
+
+
+**Maior dificuldade encontrada e como resolvi (ou não resolvi):**
+
+Não consegui fazer a implementação de items nem maneiras de mudar de nível de forma conveniente. Obtive imensos e erros crashs sem explicação bem como SegFaults ao ponto de abandonar o método que pretendia utilizar que consistia em criar condições no mapa para a mudança de nível.
+Relativamente aos items, a abordagem inicial de criar uma função que gera structs para cada items também não funcinou. 
+Amanhã tentarei implementar algo mais simples devido as limitações de tempo.
+
+**Próximo passo planeado:**
+
+- Finalizar o sistema de combate -> usar a AC (armour class) para determinar a chance de acertar um ataque tanto para o jogador como os monstros;
+- Implementar um sistema simples de tesouros (somente ouro devio a limitações de tempo) espalhados pelo mapa;
+- Implementar um inventário para o jogador ativado por uma tecla (i) contendo poções que possam ser usadas;
+- Implementar a mudança de níveis do mapa;
+- Implementar simples de nível do personagem do jogador;
+- Reescrever o README file; 
+
+**Linhas de código escritas hoje (estimativa):**
+
++- 250 contando com a reesccrita de funções/restruturação do main.c.

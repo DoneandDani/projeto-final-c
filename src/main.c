@@ -4,33 +4,14 @@ int max_width = 100;
 int max_height = 25;
 
 
-int main(){
-    
-   
 
-    int userInput;
-    Coordinates *newCords;
-    
-    Level * level;
+
+
+int main(){
 
     screen_setup();
-    level = create_level(1);
-    print_game_interface(level);
-    
-
-    
-    //Main game loop, ends when user pressess the esc key
-    while ((userInput =getch()) != esc){
-        print_game_interface(level);
-        newCords= handle_input(userInput, level-> user);
-        check_move(newCords, level);
-        move_monster(level);
-        move(level->user->coordinates->y,level->user->coordinates->x);
-    }
-    
+    menu_loop();    
     refresh();
-    
-
     endwin();
     return 0;
     

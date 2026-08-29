@@ -1,6 +1,9 @@
     #include "rogue.h"
 
     int screen_setup(){
+        
+        
+        
         initscr();
         raw();
         keypad(stdscr, TRUE);

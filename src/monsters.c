@@ -129,16 +129,10 @@ Monster * create_monster(char symbol, int health, int attack, int speed, int AC,
 
 int set_starting_cords( Monster * monster, Room * room){
 
-    
-
     monster->mCords=malloc(sizeof(Coordinates));
 
     monster->mCords->y = (rand() % (room->height-2)) + room->coordinates.y+1;
     monster->mCords->x = (rand() % (room->width-2)) + room->coordinates.x+1;
-
-    
-
-    mvprintw(monster->mCords->y,monster->mCords->x, monster->stringBuffer);
 
 }
 
@@ -152,8 +146,6 @@ int  move_monster(Level *level){
             continue;
         }
         
-        mvprintw(level->monsters[n]->mCords->y,level->monsters[n]->mCords->x, ".");
-
         if (level->monsters[n]->pathfinding == 1){
             pathfinding_random(level->monsters[n]->mCords);
         }
@@ -163,7 +155,7 @@ int  move_monster(Level *level){
             
         }
 
-        mvprintw(level->monsters[n]->mCords->y,level->monsters[n]->mCords->x, level->monsters[n]->stringBuffer);
+        
     }
 }
 
@@ -182,9 +174,7 @@ Monster * get_monster(Coordinates *coordinates, Monster **monsters){
 
 int kill_monster(Monster * monster){
 
-    mvprintw(monster ->mCords->y,monster ->mCords->x, "." ); //Change later to leave corpse behind
     monster->isAlive=0;
-
     return 1;
 
 }
@@ -254,4 +244,12 @@ int pathfinding_seek(Coordinates *start, Coordinates *destination){
 
     }
     return 1;
+}
+
+void draw_monster(Monster *monster){
+
+    if (monster->isAlive==1){
+        mvprintw(monster->mCords->y, monster->mCords->x, monster->stringBuffer);
+    }
+
 }
