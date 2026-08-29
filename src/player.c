@@ -7,19 +7,30 @@ Player * player_maker(){
     initPlayer= malloc(sizeof(Player)); //Dynamically allocated the size in memory necessary for the newPlayer pointer based on the size of Player,
     initPlayer-> coordinates =malloc(sizeof(Coordinates));
     // as I don't know beforehand how big it's going to be (+ I'll constantly add changes to the Player struct itself).
-    initPlayer-> coordinates->x =14; //Acessing the coordinates in the Player struct and changing their values
-    initPlayer-> coordinates->y =6;
     initPlayer->HP= 5;
     initPlayer->attack=1;
     initPlayer->gold=0;
     initPlayer->maxHP=20;
     initPlayer->XP=0;
 
-    mvprintw(initPlayer-> coordinates->y, initPlayer-> coordinates->x, "@");
-    move(initPlayer-> coordinates->y, initPlayer-> coordinates->x);
+    
     
     return initPlayer;
 }
+
+int place_player(Player *user, Room **rooms){ //I'll hardcode the player to be generated in room 3 (bottom left),
+                                          // later I might do it so that starting location is also random
+
+    user->coordinates->y = rooms[3]->coordinates.y +1;
+    user->coordinates->x = rooms[3]->coordinates.x +1;
+
+    mvprintw(user-> coordinates->y, user-> coordinates->x, "@");
+    move(user-> coordinates->y, user-> coordinates->x);
+
+
+
+}
+
 
 
 Coordinates * handle_input(int input, Player * user){

@@ -66,32 +66,47 @@ typedef struct Room
   Coordinates coordinates;
   int width;
   int height;
-  Coordinates ** doors;
-
+  struct Door ** doors;
+  int nOfDoors;  
   //Monster ** monsters;
   //Items ** items;  
 } Room ;
 
+typedef struct Door
+{
+    Coordinates coordinates;
+    int connected;
+}Door;
 
 
+//Global variables (for display size)
+
+extern int max_width;
+extern int max_height;
 
 
+// Screen functions
 int screen_setup();
 int print_game_interface(Level * level);
 
+// Map functions
 Room ** room_maker();
 char ** save_level_coordinates();
 Level * create_level(int level);
+void connect_doors(Level * level);
 
+// Player functions
 Player * player_maker(); //Promising a function that return a pointere to the struct Player, I think.
 Coordinates * handle_input(int input, Player * user);
 int player_move(Coordinates *newCords, Player* user, char **level );
 int check_move(Coordinates *newCords, Level *level);
+int place_player(Player *user, Room **rooms);
 
-Room * create_room(int grid);
+// Room functions
+Room * create_room(int grid, int nOfDoors);
 int draw_room(Room *room);
-int connect_doors(Coordinates *door1 , Coordinates *door2);
 
+// Monster functions
 int add_monsters(Level * level);
 Monster * select_monster(int level);
 Monster * create_monster(char symbol, int health, int attack, int speed, int AC, int pathfinding);
@@ -102,6 +117,14 @@ int pathfinding_seek(Coordinates *start, Coordinates *destination);
 Monster * get_monster(Coordinates *coordinates, Monster **monsters);
 int kill_monster(Monster * monster);
 
+// Combat functions 
 int combat(Player *player, Monster *monster, int initiative);
+
+// New pathfinding functions (hell)
+void add_coordinates_YX(int ** frontier, int  frontier_count, int y, int x);
+int add_neighbors(int **frontier,int frontier_count, int *** came_from, int y, int x);
+void pathfinding(Coordinates *start, Coordinates *end );
+void add_coordinates_YX(int ** frontier, int  frontier_count, int y, int x);
+int pf_verify_cord(int y, int x);
 
 #endif 

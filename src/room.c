@@ -1,9 +1,11 @@
 #include "rogue.h"
 
-Room * create_room(int grid){
+Room * create_room(int grid, int nOfDoors){
     
+    int n;
     Room * newRoom;
     newRoom = malloc(sizeof(Room));
+    newRoom->nOfDoors= nOfDoors;
 
     switch (grid)
     {
@@ -36,35 +38,42 @@ Room * create_room(int grid){
         break;
     }
 
-    newRoom->height =rand()% 7 +4;
-    newRoom->width =rand()% 18 +4;
+    newRoom->height =rand()% 6 +4;
+    newRoom->width =rand()% 14 +4;
 
-    newRoom->coordinates.y+=rand() % (9 - newRoom->height +1);
-    newRoom->coordinates.x+= rand() % (29 - newRoom->width +1);
+    newRoom->coordinates.y+=rand() % (10 - newRoom->height )+1 ;
+    newRoom->coordinates.x+= rand() % (30 - newRoom->width ) +1;
 
 
-    newRoom->doors =malloc(sizeof(Coordinates)* 4);
+    newRoom->doors =malloc(sizeof(Door*)* nOfDoors);
+
+    for ( n = 0; n < nOfDoors; n++){
+
+        newRoom->doors[n] = malloc(sizeof(Door));
+        newRoom->doors[n]->connected =0;
+    }
+    
 
     // Generating doors on the walls of rooms. Each value in the array door corresponds to one side of the room.
     //Top door
-    newRoom->doors[0] = malloc(sizeof(Coordinates));
-    newRoom-> doors[0]->x = rand() % (newRoom->width -2) + newRoom ->coordinates.x+ 1;
-    newRoom-> doors[0]->y = newRoom ->coordinates.y;
+    
+    newRoom-> doors[0]->coordinates.x = rand() % (newRoom->width -2) + newRoom ->coordinates.x+ 1;
+    newRoom-> doors[0]->coordinates.y = newRoom ->coordinates.y;
 
     //Left door
-    newRoom->doors[1] = malloc(sizeof(Coordinates));
-    newRoom-> doors[1]->x = newRoom ->coordinates.x;
-    newRoom-> doors[1]->y = rand() % (newRoom->height -2) + newRoom ->coordinates.y +1;
+    
+    newRoom-> doors[1]->coordinates.x = newRoom ->coordinates.x;
+    newRoom-> doors[1]->coordinates.y = rand() % (newRoom->height -2) + newRoom ->coordinates.y +1;
 
     //Right door
-    newRoom->doors[2] = malloc(sizeof(Coordinates));
-    newRoom-> doors[2]->x = newRoom ->coordinates.x + newRoom->width -1;
-    newRoom-> doors[2]->y = rand() % (newRoom->height -2) + newRoom ->coordinates.y +1;
+    
+    newRoom-> doors[2]->coordinates.x = newRoom ->coordinates.x + newRoom->width -1;
+    newRoom-> doors[2]->coordinates.y = rand() % (newRoom->height -2) + newRoom ->coordinates.y +1;
 
     //Bottom door
-    newRoom->doors[3] = malloc(sizeof(Coordinates));
-    newRoom-> doors[3]->x = rand() % (newRoom->width -2) + newRoom ->coordinates.x +1 ;
-    newRoom-> doors[3]->y = newRoom ->coordinates.y + newRoom-> height -1;
+    
+    newRoom-> doors[3]->coordinates.x = rand() % (newRoom->width -2) + newRoom ->coordinates.x +1 ;
+    newRoom-> doors[3]->coordinates.y = newRoom ->coordinates.y + newRoom-> height -1;
 
 
     return newRoom;
@@ -92,15 +101,26 @@ int draw_room(Room *room){
 
     }
 
-    mvprintw(room->doors[0]->y,room->doors[0]->x, "+");
-    mvprintw(room->doors[1]->y,room->doors[1]->x, "+");
-    mvprintw(room->doors[2]->y,room->doors[2]->x, "+");
-    mvprintw(room->doors[3]->y,room->doors[3]->x, "+");
+    mvprintw(room->doors[0]->coordinates.y,room->doors[0]->coordinates.x, "+");
+    mvprintw(room->doors[1]->coordinates.y,room->doors[1]->coordinates.x, "+");
+    mvprintw(room->doors[2]->coordinates.y,room->doors[2]->coordinates.x, "+");
+    mvprintw(room->doors[3]->coordinates.y,room->doors[3]->coordinates.x, "+");
 
 
     return 1;
 
 }
+
+/*
+This code was the original algorithm for connecting doors. It uses a 'greedy' path seeking algoritm. I has many problems given the current setup
+of the map. 
+In particular, it makes it so that a door on the left side of a room will never connect to any door that's not directly to its left, which is not
+good given the goal of connecting all doors.
+Also this function needs to be called for each connection between two doors, which is annoying.
+Given that I already implemented a new pathfinding algorithm I'll create a different function that connects the whole map in one call, for convenience.  
+
+I'll leave this code here in case I need to refer to it in the future, as I'll still use a similar implementatino for the monsters seeking behaviour.
+
 
 int connect_doors(Coordinates *door1 , Coordinates *door2){
 
@@ -152,3 +172,4 @@ int connect_doors(Coordinates *door1 , Coordinates *door2){
 }
 
 
+*/

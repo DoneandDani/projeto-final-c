@@ -1,10 +1,12 @@
 #include "rogue.h"
 
+int max_width = 100;
+int max_height = 25;
+
+
 int main(){
     
-    printf("STARTING\n");
-    fflush(stdout);
-
+   
 
     int userInput;
     Coordinates *newCords;
@@ -12,10 +14,6 @@ int main(){
     Level * level;
 
     screen_setup();
-
-    printf("AFTER SCREEN SETUP\n");
-    fflush(stdout);
-    
     level = create_level(1);
     print_game_interface(level);
     
@@ -25,21 +23,15 @@ int main(){
     while ((userInput =getch()) != esc){
         print_game_interface(level);
         newCords= handle_input(userInput, level-> user);
-        if (newCords==NULL){
-            continue;
-        }
         check_move(newCords, level);
         move_monster(level);
         move(level->user->coordinates->y,level->user->coordinates->x);
-
-        free(newCords);
     }
     
+    refresh();
     
 
     endwin();
-
-    printf("EXITING\n");
     return 0;
     
 }

@@ -2,7 +2,6 @@
 
     int screen_setup(){
         initscr();
-        printw("Hello world!");
         raw();
         keypad(stdscr, TRUE);
         noecho();

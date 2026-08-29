@@ -112,7 +112,7 @@ Os mesmos da sessão passada. A sessão de hoje foi curta e só envolveu reescre
 
 +- 300 linhas, mais algumas dezenas reescritas ;
 
-## Sessão 6 – D27/08/2026
+## Sessão 6 – 27/08/2026
 **Funcionalidades implementadas hoje:**
 
 - Implementei funcionalidade de movimento aos monstros com dois padrões de movimento:
@@ -136,3 +136,47 @@ Implementar um algoritmo diferente para os corredores provou ser bastante difíc
 **Linhas de código escritas hoje (estimativa):**
  
  +- 200 linhas de código;
+
+
+## Sessão 7 – 28/08/2026
+**Funcionalidades implementadas hoje:**
+
+- Implementei as suguestões feitas no github, nomeadamente:
+    - Corrigir a gralha no nome da pasta source,
+    - Resolver a questão de os ficheiros .exe estarem a ser enviados para o repositório no github;
+    - Resolver a questão de os ficheiros .c não estarem a ser enviados para o github;
+- Resolvi também um erro grave no código que causava crashes aleatórios causado por uma chamada imprópria da função rand() no ficheiro room.c; 
+
+
+**Maior dificuldade encontrada e como resolvi (ou não resolvi):**
+
+ Perceber aonde estava o erro que causava o crash foi demorado, pois achava que estava relacionado com as mudanças relativas ao git. 
+
+**Próximo passo planeado:**
+
+O descrito na sessão anterior.
+
+**Linhas de código escritas hoje (estimativa):**
+
+Neste commit nenhumas, farei outro commit ainda hoje com o progresso real no projeto.
+
+
+
+## Sessão 8 – 28/08/2026
+**Funcionalidades implementadas hoje:**
+
+- Implementei uma algoritmo de Breadth First Search para criar os túneis entre as rooms.
+
+**Maior dificuldade encontrada e como resolvi (ou não resolvi):**
+...
+A implementação  do algoritmo Breadth First Search. Traduzir o algoritmo para C, em particular, mantendo a estrutura que já tinha no código foi difícil. Para entender o algoritmo consultei vários recursos online, contudo este [site] (https://www.redblobgames.com/pathfinding/) foi essencial.
+Também passei algum tempo no source code (e discussões do mesmo) do jogo [NetHack] (https://github.com/NetHack/NetHack), que serviu como inspiração para este projeto, que foi interessante mas não muito útil.  
+
+**Próximo passo planeado:**
+
+As  que tinha referido na sessão 6, ao que acrescento a criação de um menu e end game screen.
+
+
+**Linhas de código escritas hoje (estimativa):**
+
++- 150 linhas de código.
