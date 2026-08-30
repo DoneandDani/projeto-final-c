@@ -7,13 +7,18 @@ Player * player_maker(){
     initPlayer= malloc(sizeof(Player)); //Dynamically allocated the size in memory necessary for the newPlayer pointer based on the size of Player,
     initPlayer-> coordinates =malloc(sizeof(Coordinates));
     // as I don't know beforehand how big it's going to be (+ I'll constantly add changes to the Player struct itself).
-    initPlayer->HP= 5;
+    initPlayer->HP= 20;
     initPlayer->attack=1;
     initPlayer->gold=0;
     initPlayer->maxHP=20;
     initPlayer->XP=0;
-
+    initPlayer->AC =12;
+    initPlayer->playerLevel =1;
     
+    initPlayer->inventoryCapacity= 10;
+    initPlayer->inventorySize=0;
+
+    initPlayer->inventory =malloc(sizeof(Item *) * initPlayer->inventoryCapacity);
     
     return initPlayer;
 }
@@ -32,6 +37,10 @@ Coordinates * handle_input(int input, Player * user){
     
     Coordinates *newCors;
     newCors = malloc(sizeof(Coordinates));
+
+    if (newCors== NULL){
+        return NULL;
+    }
 
     switch (input)
     {
@@ -60,6 +69,7 @@ Coordinates * handle_input(int input, Player * user){
             break;
 
         default:
+            free(newCors);
             return NULL;
 
     }
@@ -77,10 +87,12 @@ int player_move(Coordinates *newCords, Player* user, char **level ){
 int check_move(Coordinates *newCords, Level *level){
 
     Player * user;
+    Monster *monster;
+
     user= level->user;
 
     int tempP;
-    switch (mvinch(newCords->y,newCords->x)) //Function from Ncurses that checks what character the cursor is on
+    switch (mvinch(newCords->y,newCords->x) & A_CHARTEXT) //Function from Ncurses that checks what character the cursor is on
     {
         case '.':
             player_move(newCords, user, level->tiles);
@@ -92,22 +104,45 @@ int check_move(Coordinates *newCords, Level *level){
             player_move(newCords, user, level->tiles);
             break;
         case 'r':
-            combat(user, get_monster(newCords, level->monsters), 1);
+            monster =get_monster(newCords,level->monsters, level->numberOfMonsters);
+            if (monster != NULL){
+                combat(user,monster,1);
+            }
             break;
         case 'g':
-            combat(user, get_monster(newCords, level->monsters), 1);
+            monster =get_monster(newCords,level->monsters,level->numberOfMonsters);
+            if (monster != NULL){
+                combat(user,monster,1);
+            }
             break;
         case 'w':
-            combat(user, get_monster(newCords, level->monsters), 1);
-            break;
+            monster =get_monster(newCords,level->monsters,level->numberOfMonsters);
+            if (monster != NULL){
+                combat(user,monster,1);
+            }
+            break;  
         case 't':
-            combat(user, get_monster(newCords, level->monsters), 1);
+            monster =get_monster(newCords,level->monsters,level->numberOfMonsters);
+            if (monster != NULL){
+                combat(user,monster,1);
+            }
             break;
+        case '$':
+            player_move(newCords,user,level->tiles);
+            pickup_item(user,level);
+            break;
+        case '!':
+            player_move(newCords,user,level->tiles);
+            pickup_item(user,level);
+            break;
+        case '<':
+            player_move(newCords,user,level->tiles);
+            return 2;
         default:
-    
             break;
 
     }
+    return 0;
 
 }
 
@@ -116,5 +151,23 @@ void draw_player(Player *player ){
     mvprintw(player->coordinates->y,player->coordinates->x, "@" );
     move(player->coordinates->y,player->coordinates->x);
 
+
+}
+
+int player_level_up(Player *player){
+
+    int newPlayerLevel;
+
+    newPlayerLevel = (player->XP /10) +1;
+
+    while (player->playerLevel<newPlayerLevel){
+
+        player->playerLevel++;
+        player->maxHP +=5;
+        player->attack +=2;
+        player->AC +=2;
+    }
+
+    return 1;
 
 }

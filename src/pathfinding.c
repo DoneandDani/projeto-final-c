@@ -127,6 +127,28 @@ void pathfinding(Coordinates *start, Coordinates *end ){
     y=end->y;
     x=end->x;
 
+
+    if (came_from[y][x][0] == -1) {
+        
+        for (i=0;i<max_height*max_width; i++){
+            free(frontier[i]);
+
+        }
+        free(frontier);
+
+        for (i=0;i<max_height;i++){
+            for (j =0; j <max_width;j++){
+                free(came_from[i][j]);
+            }
+            free(came_from[i]);
+
+        }
+        free(came_from);
+
+
+        return;
+    }
+
     while (y != start->y || x !=start->x){
         
         tempY=y;
@@ -134,10 +156,23 @@ void pathfinding(Coordinates *start, Coordinates *end ){
         x= came_from[tempY][x][1];
         mvprintw(y,x,"#");
         
+    }
 
-        
+    
+    for (i=0;i<max_height*max_width; i++){
+        free(frontier[i]);
+
+    }
+    free(frontier);
+
+    for (i=0;i<max_height;i++){
+        for (j =0; j <max_width;j++){
+            free(came_from[i][j]);
+        }
+        free(came_from[i]);
+
     }
     
-
-
+    free(came_from);
+    
 }

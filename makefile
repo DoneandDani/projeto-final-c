@@ -1,7 +1,7 @@
 
 CC = gcc
 
-CFLAGS =  -I$(IDIR) -I/ucrt64/include/ncursesw
+CFLAGS = -g -I$(IDIR) -I/ucrt64/include/ncursesw
 LDLIBS = -lmenuw -lncursesw
 
 IDIR = ./include/

@@ -1,21 +1,49 @@
 
 #include "rogue.h"
 
-Level * create_level(int level){
+Level * create_level(int level, Player *player){
     
     Level * newLevel;
+
+    clear();
+    refresh();
+
+    
     newLevel = malloc(sizeof(Level));
+
+    if (newLevel ==NULL){
+        return NULL;
+    } 
 
     newLevel-> level = level;
     newLevel-> numberOfRooms =6;
+
     newLevel-> rooms= room_maker();
+
     connect_doors(newLevel);
+    place_stairs(newLevel);
+    
     newLevel->tiles = save_level_coordinates();
     
-    newLevel->user=player_maker();
-    place_player(newLevel->user, newLevel-> rooms);
+    
+    if (player == NULL){
+
+        newLevel->user=player_maker();
+
+        place_player(newLevel->user, newLevel-> rooms);
+
+    }else{
+        newLevel->user =player;
+        place_player(newLevel->user, newLevel->rooms);
+    }
+  
 
     add_monsters(newLevel);
+
+ 
+    add_items(newLevel);
+
+
 
     return newLevel;
 
@@ -26,7 +54,7 @@ Room ** room_maker(){
 
     int n;
     Room ** rooms;
-    rooms = malloc(sizeof(Room)*6);
+    rooms = malloc(sizeof(*rooms)*6);
     
     for (n = 0; n < 6; n++)
     {
@@ -91,11 +119,11 @@ char ** save_level_coordinates(){
 
     int x,y;
     char ** map_cords;
-    map_cords = malloc(sizeof(char *) * 25);
+    map_cords = malloc(sizeof(char *) * max_height);
 
     for (y=0;y<max_height;y++){
 
-        map_cords[y] = malloc(sizeof(char) *100);
+        map_cords[y] = malloc(sizeof(char) *max_width);
         for (x=0;  x< max_width; x++){
 
             map_cords[y][x] = mvinch(y,x);
@@ -120,7 +148,11 @@ void draw_level(Level *level){
         }
     }
 
-    //then prints the monstersº
+    //then draw stairs
+
+    mvaddch(level->staircords.y,level->staircords.x, '<');
+
+    //then prints the monsters
 
     for (n =0; n<level->numberOfMonsters; n++){
 
@@ -130,5 +162,31 @@ void draw_level(Level *level){
     //then prints player
 
     draw_player(level->user);
+
+    
+
+}
+
+int place_stairs(Level *level){
+
+    int gridNumber;
+    Room *room;
+
+    do{
+    
+        gridNumber= rand() % level->numberOfRooms;
+
+    } while( gridNumber ==3);
+
+    room = level->rooms[gridNumber];
+
+    level->staircords.y = room->coordinates.y +1 +rand() % (room->height-2);
+    level->staircords.x = room->coordinates.x +1 +rand() % (room->width-2);
+
+
+
+
+    return 1;
+
 
 }

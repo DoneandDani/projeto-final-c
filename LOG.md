@@ -208,3 +208,30 @@ Amanhã tentarei implementar algo mais simples devido as limitações de tempo.
 **Linhas de código escritas hoje (estimativa):**
 
 +- 250 contando com a reesccrita de funções/restruturação do main.c.
+
+## Sessão 10 – 30/08/2026
+**Funcionalidades implementadas hoje:**
+
+- Implemententação de um sistema de AC para monstros e o jogador e uma função que usa esse valor para determinar a change de acertar;
+- Reescrita substancial do sistema de interação entre jogador e monstros, bem como o pathfinding dos mesmos;
+- Implementação de funções que geram items, usadas somente para colocar ouro ($) e poções de HP (!) no mapa. Contudo estão desenhas para suportar qualquer tipo de item da forma struct item. Por questões de tempo esses outros items não foram implementados;
+- Implementação de um sistema de inventário para o jogador. Não foi possível implementar um menu separado para o mesmo, mas a arquitetura estabelicida foi usada apresentar o número de poções disponíveis ao jogador que se altera dinamicamente comforme estas são apanhas do mapa e consumidas;
+- Implementação de um sistema para 'pick up' de ouro e poções, bem como funções para o consumo de poções;
+- Implementação de um sistema level up para o personagem do jogador (subida de nível implica aumento do HP máximo, AC e dano);
+- Implementação de um sistemas de níveis para o jogo. Quando o personagem entra nas escadas (<) desce de nível. Existem monstros mais perigosos quão mais fundo o jogador for;
+- Aumento dos elementos de diferenciação entre os monstros (diferentes montantes de XP);
+- Reescrita substancial um pouco por todo o código no decorrer da implementação das funcionalidades descritas anteriormente. Foco particular em questões de gestão de memória e pointers soltos;
+- Reescrita do README file;
+
+**Maior dificuldade encontrada e como resolvi (ou não resolvi):**
+
+Enorme dificuldade em implementar o sistema de mudança de nível. Envolveu reescrever grande parte do levels.c e do game.c e uma reorganização estrutural do código como um todo.
+Em particular, foi preciso repensar a implementação da função create_level e da main_game_loop. 
+
+**Próximo passo planeado:**
+
+NA - Apresentação
+
+**Linhas de código escritas hoje (estimativa):**
+
+350-400 linhas de código.

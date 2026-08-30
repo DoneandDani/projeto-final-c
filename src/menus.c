@@ -65,27 +65,51 @@ void close_menu(int nItems, MENU *menu, ITEM ** items){
 void menu_loop(){
 
     int choice;
-    char *choices[]= {"Start Game", "Close Game"};
+    
 
     Game game;
     game.currentLevel=0;
 
     while (true)
     {
-        choice = main_menu(2, choices);
+        if(game.currentLevel ==0){
 
-        switch (choice)
-        {
-        case 0: // START GAME
-            main_game_loop(&game);
-            clear();
-            break;
-        case 1: // QUIT GAME
-            return;
-            break;
-        
-        default:
-            break;
+            char *choices[]= {"Start Game", "Close Game"};
+
+            choice = main_menu(2, choices);
+
+            switch (choice)
+            {
+            case 0: // START GAME
+                main_game_loop(&game);
+                clear();
+                break;
+            case 1: // QUIT GAME
+                return;
+                break;
+            
+            default:
+                break;
+            }
+        }else{
+
+            char *choices[]= {"Continue", "Close Game"};
+
+            choice = main_menu(2, choices);
+
+            switch (choice)
+            {
+            case 0: // START GAME
+                main_game_loop(&game);
+                clear();
+                break;
+            case 1: // QUIT GAME
+                return;
+                break;
+            
+            default:
+                break;
+            }
         }
 
     }
